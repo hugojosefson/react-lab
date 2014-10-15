@@ -20,7 +20,7 @@ You should be able to run `index.html` directly, but should you want to use a si
 
 Create a (very) lightweight [SCRUM](http://en.wikipedia.org/wiki/Scrum_(software_development) board.
 
-See the [blueprint](https://github.com/jayway/react-lab/blueprint.html) for target markup. CSS is provided, but feel free to modify as needed.
+See the [blueprint](https://github.com/jayway/react-lab/blob/master/blueprint.html) for target markup. CSS is provided, but feel free to modify as needed.
 
 ## Useful Links
 
