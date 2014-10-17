@@ -1,76 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>SCRUMtastic</title>
+  <title>Expense Manager</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="stylesheets/main.css">
+  <link rel="stylesheet" href="src/stylesheets/main.css">
 </head>
-<body id="body">
+<body>
   <div class="page-wrap">
     <header class="header" role="banner">
-      <h1><a href="blueprint.html">SCRUM<span>tastic</span></a></h1>
-      <button class="new-task">New Task</button>
+      <h1><a href="blueprint.html">Expense Manager</a></h1>
     </header>
     <main class="main" role="main">
-      <div class="scrum-board">
-
-        <!-- Backlog -->
-        <div class="column">
-          <h3>Backlog</h3>
-          <div class="tasks">
-            <div class="task selected">
-              <textarea class="description">Generate flux capacitor distortion field</textarea>
-              <div class="actions">
-                <button class="move-left" title="Move left">←</button>
-                <button class="move-right" title="Move right">→</button>
-              </div>
-            </div>
-            <div class="task">
-              <a href="#" class="description">Accumulate arithmetic data</a>
-              <div class="actions">
-                <button class="move-left" title="Move left">←</button>
-                <button class="move-right" title="Move right">→</button>
-              </div>
-            </div>
-            <div class="task">
-              <a href="#" class="description">Store structurally stable field criteria for analysis</a>
-              <div class="actions">
-                <button class="move-left" title="Move left">←</button>
-                <button class="move-right" title="Move right">→</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- In Progress -->
-        <div class="column">
-          <h3>In Progress</h3>
-          <p>This column is empty!</p>
-        </div>
-
-        <!-- Done -->
-        <div class="column">
-          <h3>Done</h3>
-          <div class="tasks">
-            <div class="task">
-              <a href="#" class="description">Acquire world dominance</a>
-              <div class="actions">
-                <button class="move-left" title="Move left">←</button>
-                <button class="move-right" title="Move right">→</button>
-              </div>
-            </div>
-            <div class="task">
-              <a href="#" class="description">Map heuristics to empirical chart</a>
-              <div class="actions">
-                <button class="move-left" title="Move left">←</button>
-                <button class="move-right" title="Move right">→</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      <table class="transaction-log">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th class="amount">Amount</th>
+            <th class="date">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Burgers</td>
+            <td class="amount negative">-54.99</td>
+            <td class="date">Sept 19</td>
+          </tr>
+          <tr>
+            <td>General Awesomeness Award</td>
+            <td class="amount positive">+10&nbsp;000.00</td>
+            <td class="date">Oct 2</td>
+          </tr>
+          <tr>
+            <td>Playstation 4</td>
+            <td class="amount negative">-450.25</td>
+            <td class="date">Oct 8</td>
+          </tr>
+          <tr>
+            <td>Meaning of life</td>
+            <td class="amount positive">+42.00</td>
+            <td class="date">Dec 1</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="summary">
+            <td>Sum</td>
+            <td class="amount positive">10&nbsp;395.26</td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+      <form class="add-transaction">
+        <input type="text" placeholder="Description">
+        <input type="number" value="1">
+        <button type="submit">Submit</button>
+      </form>
     </main>
   </div>
 </body>

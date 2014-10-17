@@ -2,30 +2,45 @@
 
 A lab on the basics of [React](http://facebook.github.io/react/).
 
+## Requirements
+
+* NodeJS 0.11.x
+* Make
+* [A browser that supports Promises](http://caniuse.com/#feat=promises).
+
 ## Getting Started
 
-Clone the repository:
+Clone and enter the repository:
 
     git clone git@github.com:jayway/react-lab.git
+    cd react-lab
 
-If you don't have Node (requires [Homebrew](http://brew.sh)):
+Build and watch for changes:
 
-    brew install node
+    make watch
 
-Install and run a simple web server:
+This starts a server that hosts your app and the blueprint.
 
-    npm install -g http-server
-    http-server
-
-Finally:
-
-    open http://localhost:8080
+* Open http://localhost:8081/ to see your app.
+* Open http://localhost:8081/blueprint.html to see the blueprint.
 
 ## Objective
 
-Create a (very) lightweight [SCRUM](http://en.wikipedia.org/wiki/Scrum_(software_development)) board.
+Create a (very) light expense tracker app. We have created a mock backend API
+that you can use to retrieve and store transactions with. There's also some CSS
+ready that you can use if you follow the
+[blueprint](https://github.com/jayway/react-lab/blob/master/blueprint.html).
 
-See the [blueprint](https://github.com/jayway/react-lab/blob/master/blueprint.html) for target markup. CSS is provided, but feel free to modify as needed.
+You should be able to get all the existing transactions through `api.transactions.getAll()`
+which returns a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+of an array of transactions.
+
+When you have created the form you can add new transactions with
+`api.transactions.add(transaction)`. See the `src/scripts/data.jsx` for the format
+of the transactions.
+
+When you're done you should be able to add new transactions to the list and see
+the updated **Sum**.
 
 ## Useful Links
 
