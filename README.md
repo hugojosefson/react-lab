@@ -4,17 +4,22 @@ A lab on the basics of [React](http://facebook.github.io/react/).
 
 ## Getting Started
 
-You should be able to run `index.html` directly, but should you want to use a simple web server, from the lab root directory:
+Clone the repository:
 
-    # Node
+    git clone git@github.com:jayway/react-lab.git
+
+Set up a simple web server of your choice:
 
     npm install -g http-server
     http-server
-    open http://localhost:8080
 
-    # Or the Python way
+or:
 
     python -m SimpleHTTPServer
+
+and finally:
+
+    open http://localhost:8080
 
 ## Objective
 
