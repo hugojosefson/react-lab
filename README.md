@@ -23,7 +23,7 @@ and finally:
 
 ## Objective
 
-Create a (very) lightweight [SCRUM](http://en.wikipedia.org/wiki/Scrum_(software_development) board.
+Create a (very) lightweight [SCRUM](http://en.wikipedia.org/wiki/Scrum_(software_development)) board.
 
 See the [blueprint](https://github.com/jayway/react-lab/blob/master/blueprint.html) for target markup. CSS is provided, but feel free to modify as needed.
 
