@@ -8,16 +8,16 @@ Clone the repository:
 
     git clone git@github.com:jayway/react-lab.git
 
-Set up a simple web server of your choice:
+If you don't have Node (requires [Homebrew](http://brew.sh)):
+
+    brew install node
+
+Install and run a simple web server:
 
     npm install -g http-server
     http-server
 
-or:
-
-    python -m SimpleHTTPServer
-
-and finally:
+Finally:
 
     open http://localhost:8080
 
