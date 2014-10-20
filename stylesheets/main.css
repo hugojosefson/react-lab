@@ -13,7 +13,7 @@ html, body {
 
 html {
   font: 100% Helvetica, Arial, sans-serif;
-  background: floralwhite;
+  background: papayawhip;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -59,9 +59,9 @@ a {
   justify-content: space-between;
   -webkit-align-items: center;
   align-items: center;
-  padding: .5rem .75rem;
+  padding: 1rem .75rem;
   width: 100%;
-  background: slategray;
+  background: tomato;
   color: white;
 }
 
