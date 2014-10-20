@@ -29,6 +29,15 @@ See the [blueprint](https://github.com/jayway/react-lab/blob/master/blueprint.ht
 
 ## Useful Links
 
-* [Official documentation](http://facebook.github.io/react/docs/getting-started.html).
+For this lab:
+
+* [Getting Started](http://facebook.github.io/react/docs/getting-started.html)
+* [Component Specs and Lifecycle](http://facebook.github.io/react/docs/component-specs.html)
 * [HTML to JSX Compiler](http://facebook.github.io/react/html-jsx.html)
 * [JSX to JS Compiler](http://facebook.github.io/react/jsx-compiler.html)
+
+Further development:
+
+* [JSXHint](https://github.com/STRML/JSXHint/)
+* [Jest](https://facebook.github.io/jest/)
+* [Reactify](https://www.npmjs.org/package/reactify)
