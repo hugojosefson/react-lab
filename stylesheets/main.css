@@ -20,6 +20,21 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 
 
 /* Utility
@@ -71,10 +86,8 @@ h1, h2, h3, h4, h5, h6 {
   background: tomato;
   color: white;
   text-shadow: inherit;
-  border: none;
   border-radius: 3px;
   box-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
-  cursor: pointer;
 }
 
 .header button:hover,
@@ -138,8 +151,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: .5rem;
 }
 
-.scrum-board .task p,
-.scrum-board .task textarea {
+.scrum-board .task .description {
   -webkit-flex-grow: 1;
   flex-grow: 1;
   padding: .5rem .75rem;
@@ -147,9 +159,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .scrum-board .task textarea {
+  max-width: 100%;
   margin: 0;
   background: white;
   border: none;
+  font-family: monospace;
+  font-size: 1rem;
 }
 
 
@@ -168,12 +183,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .scrum-board .task .actions button {
-  margin: 0;
-  border: none;
-  background: none;
   color: black;
-  cursor: pointer;
-  font-size: inherit;
 }
 
 .scrum-board .task .actions button:focus,
