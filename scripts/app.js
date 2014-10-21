@@ -128,11 +128,18 @@ var Column = React.createClass({
 var Task = React.createClass({
   getInitialState: function () {
     return {
-      selected: false
+      editable: false
     };
   },
-  select: function () {
-    this.setState({selected: !this.state.selected});
+  toggleEdit: function (edit) {
+    console.log(edit);
+    this.setState({editable: edit}, function () {
+      if (edit) {
+        var node = this.refs.description.getDOMNode();
+        node.focus();
+        node.select();
+      }
+    });
   },
   moveLeft: function () {
     console.log('Move left');
@@ -141,9 +148,17 @@ var Task = React.createClass({
     console.log('Move right');
   },
   render: function () {
+    var description;
+
+    if (this.state.editable) {
+      description = <textarea className="description" ref="description" onBlur={this.toggleEdit.bind(this, false)} defaultValue={this.props.description}></textarea>;
+    } else {
+      description = <a className="description" href="#" onClick={this.toggleEdit.bind(this, true)}>{this.props.description}</a>;
+    }
+
     return (
-      <div className="task" onClick={this.select}>
-        <p>{this.props.description}</p>
+      <div className="task">
+        {description}
         <div className="actions">
           <button className="move-left" title="Move left" onClick={this.moveLeft}>←</button>
           <button className="move-right" title="Move right" onClick={this.moveRight}>→</button>
