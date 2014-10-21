@@ -67,6 +67,7 @@ var ScrumBoard = React.createClass({
         <Column key={column.id} id={column.id} title={column.title} url="/data/tasks.json" />
       );
     });
+
     return (
       <div className="scrum-board">
         {columns}
@@ -101,6 +102,7 @@ var Column = React.createClass({
   },
   render: function () {
     var self = this;
+
     var tasks = this.state.tasks.map(function (task) {
       if (task.columnId === self.props.id) {
         return (
@@ -108,6 +110,7 @@ var Column = React.createClass({
         );
       }
     });
+
     return (
       <div className="column">
         <h3>{this.props.title}</h3>
@@ -115,7 +118,7 @@ var Column = React.createClass({
           {tasks}
         </div>
       </div>
-    )
+    );
   }
 });
 
@@ -123,10 +126,41 @@ var Column = React.createClass({
 /* Task */
 
 var Task = React.createClass({
+  getInitialState: function () {
+    return {
+      selected: false
+    };
+  },
+  onClick: function () {
+    this.setState({selected: !this.state.selected});
+  },
+  render: function () {
+    var actions;
+
+    if (this.state.selected) {
+      actions = <Actions />;
+    } else {
+      actions = undefined;
+    }
+
+    return (
+      <div className="task" onClick={this.onClick}>
+        <p>{this.props.description}</p>
+        {actions}
+      </div>
+    );
+  }
+});
+
+
+/* Actions */
+
+var Actions = React.createClass({
   render: function () {
     return (
-      <div className="task">
-        <p>{this.props.description}</p>
+      <div className="actions">
+        <button className="move-right" title="Move right">→</button>
+        <button className="move-left" title="Move left">←</button>
       </div>
     );
   }
