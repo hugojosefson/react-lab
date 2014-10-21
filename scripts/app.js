@@ -131,36 +131,23 @@ var Task = React.createClass({
       selected: false
     };
   },
-  onClick: function () {
+  select: function () {
     this.setState({selected: !this.state.selected});
   },
+  moveLeft: function () {
+    console.log('Move left');
+  },
+  moveRight: function () {
+    console.log('Move right');
+  },
   render: function () {
-    var actions;
-
-    if (this.state.selected) {
-      actions = <Actions />;
-    } else {
-      actions = undefined;
-    }
-
     return (
-      <div className="task" onClick={this.onClick}>
+      <div className="task" onClick={this.select}>
         <p>{this.props.description}</p>
-        {actions}
-      </div>
-    );
-  }
-});
-
-
-/* Actions */
-
-var Actions = React.createClass({
-  render: function () {
-    return (
-      <div className="actions">
-        <button className="move-right" title="Move right">→</button>
-        <button className="move-left" title="Move left">←</button>
+        <div className="actions">
+          <button className="move-left" title="Move left" onClick={this.moveLeft}>←</button>
+          <button className="move-right" title="Move right" onClick={this.moveRight}>→</button>
+        </div>
       </div>
     );
   }
