@@ -62,8 +62,6 @@ var ScrumBoard = React.createClass({
     this.loadColumns();
   },
   render: function () {
-    var self = this;
-
     function createColumn(column) {
       return (
         <Column key={column.id} id={column.id} title={column.title} url="/data/tasks.json" />
