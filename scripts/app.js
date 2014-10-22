@@ -62,11 +62,15 @@ var ScrumBoard = React.createClass({
     this.loadColumns();
   },
   render: function () {
-    var columns = this.state.columns.map(function (column) {
+    var self = this;
+
+    function createColumn(column) {
       return (
         <Column key={column.id} id={column.id} title={column.title} url="/data/tasks.json" />
       );
-    });
+    }
+
+    var columns = this.state.columns.map(createColumn);
 
     return (
       <div className="scrum-board">
@@ -103,13 +107,17 @@ var Column = React.createClass({
   render: function () {
     var self = this;
 
-    var tasks = this.state.tasks.map(function (task) {
-      if (task.columnId === self.props.id) {
-        return (
-          <Task key={task.id} id={task.id} description={task.description} />
-        );
-      }
-    });
+    function taskIsInColumn(task) {
+      return task.columnId === self.props.id;
+    }
+
+    function createTask(task) {
+      return (
+        <Task key={task.id} id={task.id} description={task.description} />
+      );
+    }
+
+    var tasks = this.state.tasks.filter(taskIsInColumn).map(createTask);
 
     return (
       <div className="column">
@@ -128,32 +136,34 @@ var Column = React.createClass({
 var Task = React.createClass({
   getInitialState: function () {
     return {
-      editable: false
+      editable: false,
+      description: this.props.description
     };
   },
-  toggleEdit: function (edit) {
-    console.log(edit);
-    this.setState({editable: edit}, function () {
-      if (edit) {
-        var node = this.refs.description.getDOMNode();
-        node.focus();
-        node.select();
-      }
+  editMode: function () {
+    this.setState({editable: true}, function () {
+      var node = this.refs.description.getDOMNode();
+      node.focus();
+      node.select();
     });
   },
+  save: function () {
+    console.log('blur');
+    this.setState({editable: false});
+  },
   moveLeft: function () {
-    console.log('Move left');
+    // TODO: Move task left.
   },
   moveRight: function () {
-    console.log('Move right');
+    // TODO: Move task right.
   },
   render: function () {
     var description;
 
     if (this.state.editable) {
-      description = <textarea className="description" ref="description" onBlur={this.toggleEdit.bind(this, false)} defaultValue={this.props.description}></textarea>;
+      description = <textarea className="description" ref="description" onBlur={this.save} defaultValue={this.state.description}></textarea>;
     } else {
-      description = <a className="description" href="#" onClick={this.toggleEdit.bind(this, true)}>{this.props.description}</a>;
+      description = <a className="description" ref="description" href="#" onClick={this.editMode}>{this.state.description}</a>;
     }
 
     return (
