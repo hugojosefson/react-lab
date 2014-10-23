@@ -66,7 +66,6 @@ a {
 }
 
 .header h1 {
-  font-size: 1rem;
   font-weight: bold;
   text-shadow: 0 1px 0 rgba(0, 0, 0, .5);
 }
@@ -163,7 +162,6 @@ a {
   margin: 0;
   background: white;
   border: none;
-  font-family: monospace;
   font-size: 1rem;
 }
 
