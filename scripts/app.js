@@ -42,15 +42,9 @@ var Main = React.createClass({
 
 var ScrumBoard = React.createClass({
   loadColumns: function () {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      success: function (data) {
-        this.setState({columns: data});
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(this.state.url, status, err.toString());
-      }.bind(this)
+    var self = this;
+    columnData.getAll().then(function (data) {
+      self.setState({columns: data});
     });
   },
   getInitialState: function () {
@@ -83,15 +77,9 @@ var ScrumBoard = React.createClass({
 
 var Column = React.createClass({
   loadTasks: function () {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      success: function (data) {
-        this.setState({tasks: data});
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(this.state.url, status, err.toString());
-      }.bind(this)
+    var self = this;
+    taskData.getAll().then(function (data) {
+      self.setState({tasks: data});
     });
   },
   getInitialState: function () {
@@ -146,7 +134,6 @@ var Task = React.createClass({
     });
   },
   save: function () {
-    console.log('blur');
     this.setState({editable: false});
   },
   moveLeft: function () {
