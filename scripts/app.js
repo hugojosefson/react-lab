@@ -56,9 +56,9 @@ var ScrumBoard = React.createClass({
     this.loadColumns();
   },
   render: function () {
-    function createColumn(column) {
+    function createColumn(column, i) {
       return (
-        <Column key={column.id} id={column.id} title={column.title} url="/data/tasks.json" />
+        <Column key={i} id={column.id} title={column.title} url="/data/tasks.json" />
       );
     }
 
@@ -97,9 +97,9 @@ var Column = React.createClass({
       return task.columnId === self.props.id;
     }
 
-    function createTask(task) {
+    function createTask(task, i) {
       return (
-        <Task key={task.id} id={task.id} description={task.description} />
+        <Task key={i} id={task.id} description={task.description} />
       );
     }
 
