@@ -4,14 +4,6 @@
 /* Components
  * ======================================================================== */
 
-/* Wrapper */
-
-React.renderComponent(
-  <div className="page-wrap" />,
-  document.querySelector('body')
-);
-
-
 /* Header */
 
 var Header = React.createClass({
