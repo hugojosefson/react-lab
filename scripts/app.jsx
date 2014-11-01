@@ -23,7 +23,7 @@ var Main = React.createClass({
   render: function () {
     return (
       <main className="main" role="main">
-        <ScrumBoard url="/data/columns.json" />
+        <ScrumBoard />
       </main>
     );
   }
@@ -33,28 +33,78 @@ var Main = React.createClass({
 /* Scrum Board */
 
 var ScrumBoard = React.createClass({
-  loadColumns: function () {
+  load: function () {
     var self = this;
-    columnData.getAll().then(function (data) {
-      self.setState({columns: data});
+    api.scrumBoards.getActiveScrumBoard().then(function (scrumBoard) {
+      self.setState({
+        scrumBoard: scrumBoard
+      });
     });
   },
   getInitialState: function () {
     return {
-      columns: []
+      scrumBoard: null
     };
   },
   componentDidMount: function () {
-    this.loadColumns();
+    this.load();
+  },
+  onTaskMove: function (task, direction) {
+    var scrumBoard = this.state.scrumBoard;
+    var columns = scrumBoard.columns;
+
+    function indexOfColumnWithId(id) {
+      for (var i = 0; i < columns.length; i++) {
+        var column = columns[i];
+        if (column.id === id) {
+          return columns.indexOf(column);
+        }
+      }
+      return null;
+    }
+
+    var columnIndex = indexOfColumnWithId(task.columnId);
+
+    if (columnIndex === null) {
+      return;
+    }
+
+    var nextColumnIndex = columnIndex;
+
+    if (direction === 'left' && columnIndex > 0) {
+      nextColumnIndex = columns[columnIndex - 1].id;
+    } else if (direction === 'right' && columnIndex < (columns.length - 1)){
+      nextColumnIndex = columns[columnIndex + 1].id;
+    }
+
+    if (columnIndex !== nextColumnIndex) {
+      var current = columns[columnIndex];
+      current.tasks = current.tasks.filter(function (t) {
+        return t.id !== task.id;
+      });
+      var next = columns[nextColumnIndex];
+      task.columnId = next.id;
+      next.tasks.push(task);
+
+      this.setState({
+        scrumBoard: scrumBoard
+      });
+    }
   },
   render: function () {
+    var self = this;
+
+    if (!this.state.scrumBoard) {
+      return <p>Loading...</p>;
+    }
+
     function createColumn(column, i) {
       return (
-        <Column key={i} id={column.id} title={column.title} url="/data/tasks.json" />
+        <Column key={i} column={column} onTaskMove={self.onTaskMove} />
       );
     }
 
-    var columns = this.state.columns.map(createColumn);
+    var columns = this.state.scrumBoard.columns.map(createColumn);
 
     return (
       <div className="scrum-board">
@@ -68,38 +118,27 @@ var ScrumBoard = React.createClass({
 /* Column */
 
 var Column = React.createClass({
-  loadTasks: function () {
-    var self = this;
-    taskData.getAll().then(function (data) {
-      self.setState({tasks: data});
-    });
-  },
-  getInitialState: function () {
-    return {
-      tasks: []
-    };
-  },
-  componentDidMount: function () {
-    this.loadTasks();
+  onTaskMove: function () {
+    this.props.onTaskMove.apply(null, arguments);
   },
   render: function () {
     var self = this;
 
     function taskIsInColumn(task) {
-      return task.columnId === self.props.id;
+      return task.columnId === self.props.column.id;
     }
 
     function createTask(task, i) {
       return (
-        <Task key={i} id={task.id} description={task.description} />
+        <Task key={i} task={task} onTaskMove={self.onTaskMove} />
       );
     }
 
-    var tasks = this.state.tasks.filter(taskIsInColumn).map(createTask);
+    var tasks = self.props.column.tasks.filter(taskIsInColumn).map(createTask);
 
     return (
       <div className="column">
-        <h3>{this.props.title}</h3>
+        <h3>{this.props.column.title}</h3>
         <div className="tasks">
           {tasks}
         </div>
@@ -115,7 +154,7 @@ var Task = React.createClass({
   getInitialState: function () {
     return {
       editable: false,
-      description: this.props.description
+      task: this.props.task
     };
   },
   editMode: function () {
@@ -130,17 +169,19 @@ var Task = React.createClass({
   },
   moveLeft: function () {
     // TODO: Move task left.
+    this.props.onTaskMove(this.state.task, 'left');
   },
   moveRight: function () {
     // TODO: Move task right.
+    this.props.onTaskMove(this.state.task, 'right');
   },
   render: function () {
     var description;
 
     if (this.state.editable) {
-      description = <textarea className="description" ref="description" onBlur={this.save} defaultValue={this.state.description}></textarea>;
+      description = <textarea className="description" ref="description" onBlur={this.save} defaultValue={this.state.task.description}></textarea>;
     } else {
-      description = <a className="description" ref="description" href="#" onClick={this.editMode}>{this.state.description}</a>;
+      description = <a className="description" ref="description" href="#" onClick={this.editMode}>{this.state.task.description}</a>;
     }
 
     return (
