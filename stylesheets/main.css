@@ -58,7 +58,7 @@ a {
   padding: .5rem .75rem;
   margin-bottom: 1rem;
   width: 100%;
-  background: gray;
+  background: tomato;
   color: white;
 }
 
@@ -83,6 +83,7 @@ a {
 
 .transaction-log {
   width: 100%;
+  margin-bottom: 2rem;
   border-collapse: collapse;
 }
 
@@ -103,7 +104,41 @@ a {
   padding: .5rem;
 }
 
-.scrum-board p {
-  margin: 0 0 .5rem 0;
+.transaction-log tbody {
+  border-bottom: 1px solid tan;
+}
+.transaction-log tbody tr:nth-child(even) {
+  background: whitesmoke;
+}
+.transaction-log tfoot {
+  font-weight: bold;
+}
+
+
+/* Entry Form
+ ------------------------------------------------------- */
+
+.new-entry {
+  margin: 0 auto;
+  padding: 0 .5rem;
+  max-width: 400px;
+  width: 100%;
+}
+.new-entry input,
+.new-entry button {
+  width: 100%;
+  height: 2rem;
+  padding: 0 .5rem;
+  margin-bottom: .25rem;
+  font-size: inherit;
+  border: none;
+  background: whitesmoke;
+
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.new-entry button {
+  color: white;
+  background: tomato;
 }
 
