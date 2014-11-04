@@ -98,6 +98,12 @@ a {
 .transaction-log tr td.amount {
   font-family: monospace;
 }
+.transaction-log .added {
+  color: forestgreen;
+}
+.transaction-log .deducted {
+  color: crimson;
+}
 
 .transaction-log th,
 .transaction-log td {
