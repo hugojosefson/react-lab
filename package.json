@@ -1,0 +1,22 @@
+{
+  "name": "react-lab",
+  "version": "1.0.0",
+  "description": "A lab on the basics of [React](http://facebook.github.io/react/).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jayway/react-lab.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jayway/react-lab/issues"
+  },
+  "homepage": "https://github.com/jayway/react-lab",
+  "devDependencies": {
+    "react-tools": "^0.12.0"
+  }
+}

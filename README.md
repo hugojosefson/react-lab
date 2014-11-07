@@ -12,13 +12,18 @@ If you don't have Node (requires [Homebrew](http://brew.sh)):
 
     brew install node
 
-Install and run a simple web server:
+Install the JSX transformer:
+
+    npm install -g react-tools
+
+Install a simple web server:
 
     npm install -g http-server
-    http-server
 
 Finally:
 
+    http-server
+    jsx src dist --watch --extension jsx
     open http://localhost:8080
 
 ## Objective
