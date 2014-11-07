@@ -98,10 +98,10 @@ a {
 .transaction-log tr td.amount {
   font-family: monospace;
 }
-.transaction-log .added {
+.amount.positive {
   color: forestgreen;
 }
-.transaction-log .deducted {
+.amount.negative {
   color: crimson;
 }
 

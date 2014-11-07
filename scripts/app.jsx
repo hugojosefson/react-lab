@@ -1,6 +1,5 @@
 /** @jsx React.DOM */
 
-
 /* Components
  * ======================================================================== */
 
@@ -23,179 +22,106 @@ var Main = React.createClass({
   render: function () {
     return (
       <main className="main" role="main">
-        <ScrumBoard />
+        <TransactionLog />
       </main>
     );
   }
 });
 
-
-/* Scrum Board */
-
-var ScrumBoard = React.createClass({
-  load: function () {
-    var self = this;
-    api.scrumBoards.getActiveScrumBoard().then(function (scrumBoard) {
-      self.setState({
-        scrumBoard: scrumBoard
-      });
-    });
-  },
+var TransactionLog = React.createClass({
   getInitialState: function () {
     return {
-      scrumBoard: null
+      transactions: null
     };
   },
   componentDidMount: function () {
     this.load();
   },
-  onTaskMove: function (task, direction) {
-    var scrumBoard = this.state.scrumBoard;
-    var columns = scrumBoard.columns;
-
-    function indexOfColumnWithId(id) {
-      for (var i = 0; i < columns.length; i++) {
-        var column = columns[i];
-        if (column.id === id) {
-          return columns.indexOf(column);
-        }
-      }
-      return null;
-    }
-
-    var columnIndex = indexOfColumnWithId(task.columnId);
-
-    if (columnIndex === null) {
-      return;
-    }
-
-    var nextColumnIndex = columnIndex;
-
-    if (direction === 'left' && columnIndex > 0) {
-      nextColumnIndex = columns[columnIndex - 1].id;
-    } else if (direction === 'right' && columnIndex < (columns.length - 1)){
-      nextColumnIndex = columns[columnIndex + 1].id;
-    }
-
-    if (columnIndex !== nextColumnIndex) {
-      var current = columns[columnIndex];
-      current.tasks = current.tasks.filter(function (t) {
-        return t.id !== task.id;
-      });
-      var next = columns[nextColumnIndex];
-      task.columnId = next.id;
-      next.tasks.push(task);
-
-      this.setState({
-        scrumBoard: scrumBoard
-      });
-    }
-  },
-  render: function () {
+  load: function () {
     var self = this;
-
-    if (!this.state.scrumBoard) {
-      return <p>Loading...</p>;
-    }
-
-    function createColumn(column, i) {
-      return (
-        <Column key={i} column={column} onTaskMove={self.onTaskMove} />
-      );
-    }
-
-    var columns = this.state.scrumBoard.columns.map(createColumn);
-
-    return (
-      <div className="scrum-board">
-        {columns}
-      </div>
-    );
-  }
-});
-
-
-/* Column */
-
-var Column = React.createClass({
-  onTaskMove: function () {
-    this.props.onTaskMove.apply(null, arguments);
-  },
-  render: function () {
-    var self = this;
-
-    function taskIsInColumn(task) {
-      return task.columnId === self.props.column.id;
-    }
-
-    function createTask(task, i) {
-      return (
-        <Task key={i} task={task} onTaskMove={self.onTaskMove} />
-      );
-    }
-
-    var tasks = self.props.column.tasks.filter(taskIsInColumn).map(createTask);
-
-    return (
-      <div className="column">
-        <h3>{this.props.column.title}</h3>
-        <div className="tasks">
-          {tasks}
-        </div>
-      </div>
-    );
-  }
-});
-
-
-/* Task */
-
-var Task = React.createClass({
-  getInitialState: function () {
-    return {
-      editable: false,
-      task: this.props.task
-    };
-  },
-  editMode: function () {
-    this.setState({editable: true}, function () {
-      var node = this.refs.description.getDOMNode();
-      node.focus();
-      node.select();
+    api.expenses.getAll().then(function (transactions) {
+      self.setState({
+        transactions: transactions
+      });
     });
   },
-  save: function () {
-    this.setState({editable: false});
-  },
-  moveLeft: function () {
-    // TODO: Move task left.
-    this.props.onTaskMove(this.state.task, 'left');
-  },
-  moveRight: function () {
-    // TODO: Move task right.
-    this.props.onTaskMove(this.state.task, 'right');
-  },
   render: function () {
-    var description;
+    var self = this;
 
-    if (this.state.editable) {
-      description = <textarea className="description" ref="description" onBlur={this.save} defaultValue={this.state.task.description}></textarea>;
-    } else {
-      description = <a className="description" ref="description" href="#" onClick={this.editMode}>{this.state.task.description}</a>;
+    if (!self.state.transactions) {
+      return <p>Loading...</p>;
+    }
+    if (self.state.transactions.length === 0) {
+      return <p>You have no transactions.</p>;
     }
 
+    function createTransactionRow(transaction, i) {
+      return (
+        <TransactionRow key={ transaction.id } transaction={ transaction }></TransactionRow>
+      );
+    }
+
+    var rows = self.state.transactions.map(createTransactionRow);
+
     return (
-      <div className="task">
-        {description}
-        <div className="actions">
-          <button className="move-left" title="Move left" onClick={this.moveLeft}>←</button>
-          <button className="move-right" title="Move right" onClick={this.moveRight}>→</button>
-        </div>
-      </div>
+      <table className="transaction-log">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          { rows }
+        </tbody>
+        <tfoot>
+          <SummaryRow transactions={ self.state.transactions } />
+        </tfoot>
+      </table>
     );
   }
 });
 
+var TransactionRow = React.createClass({
+  render: function () {
+    var transaction = this.props.transaction;
+    var date = transaction.date.toString();
+    console.log(date);
+    return (
+      <tr>
+        <td>{ transaction.description }</td>
+        <ColoredAmountCell amount={ transaction.amount } />
+        <td>{ date }</td>
+      </tr>
+    );
+  }
+});
+
+var SummaryRow = React.createClass({
+  render: function () {
+    function sum (t1, t2) {
+      return t1.amount + t2.amount;
+    }
+    var total = this.props.transactions.reduce(sum);
+    return (
+      <tr>
+        <td>Total</td>
+        <ColoredAmountCell amount={ total } />
+        <td></td>
+      </tr>
+    );
+  }
+});
+
+var ColoredAmountCell = React.createClass({
+  render: function () {
+    var amount = this.props.amount;
+    var c = amount >= 0 ? 'positive' : 'negative';
+
+    return <td className={ 'amount ' + c}>{amount}</td>;
+  }
+});
 
 /* Render
  * ======================================================================== */
@@ -203,7 +129,7 @@ var Task = React.createClass({
 React.renderComponent(
   // What to render
   <div className="page-wrap">
-    <Header title="SCRUMtastic" />
+    <Header title="Expense Manager" />
     <Main />
   </div>,
   // Where to render
