@@ -57,7 +57,8 @@ var TransactionLog = React.createClass({
 
     function createTransactionRow(transaction, i) {
       return (
-        <TransactionRow key={ transaction.id } transaction={ transaction }></TransactionRow>
+        //<tr key={i}><td>Hej</td></tr>
+        <TransactionRow key={i} transaction={ transaction }></TransactionRow>
       );
     }
 
@@ -72,8 +73,9 @@ var TransactionLog = React.createClass({
             <th>Date</th>
           </tr>
         </thead>
+        //<tbody>{rows}</tbody>
         <tbody>
-          { rows }
+          <tr><td>hej</td></tr>
         </tbody>
         <tfoot>
           <SummaryRow transactions={ self.state.transactions } />
@@ -85,14 +87,14 @@ var TransactionLog = React.createClass({
 
 var TransactionRow = React.createClass({
   render: function () {
-    var transaction = this.props.transaction;
-    var date = transaction.date.toString();
-    console.log(date);
+    //var transaction = this.props.transaction;
+    //var date = transaction.date.toString();
+    //console.log(date);
     return (
       <tr>
-        <td>{ transaction.description }</td>
-        <ColoredAmountCell amount={ transaction.amount } />
-        <td>{ date }</td>
+     //   <td>{ transaction.description }</td>
+   //     <ColoredAmountCell amount={ transaction.amount } />
+       // <td>{ date }</td>
       </tr>
     );
   }
@@ -126,7 +128,7 @@ var ColoredAmountCell = React.createClass({
 /* Render
  * ======================================================================== */
 
-React.renderComponent(
+React.render(
   // What to render
   <div className="page-wrap">
     <Header title="Expense Manager" />
