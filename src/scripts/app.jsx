@@ -68,8 +68,8 @@ var TransactionLog = React.createClass({
         <thead>
           <tr>
             <th>Description</th>
-            <th>Amount</th>
-            <th>Date</th>
+            <th className="amount">Amount</th>
+            <th className="date">Date</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -84,13 +84,13 @@ var TransactionLog = React.createClass({
 var TransactionRow = React.createClass({
   render: function () {
     var transaction = this.props.transaction;
-    var date = transaction.date.toString();
+    var date = transaction.date.toLocaleDateString();
 
     return (
       <tr>
         <td>{ transaction.description }</td>
         <ColoredAmountCell amount={ transaction.amount } />
-        <td>{ date }</td>
+        <td className="date">{ date }</td>
       </tr>
     );
   }
@@ -115,9 +115,13 @@ var SummaryRow = React.createClass({
 var ColoredAmountCell = React.createClass({
   render: function () {
     var amount = this.props.amount;
-    var c = amount >= 0 ? 'positive' : 'negative';
+    var classes = React.addons.classSet({
+      amount: true,
+      positive: amount >= 0,
+      negative: amount < 0
+    });
 
-    return <td className={ 'amount ' + c}>{amount}</td>;
+    return <td className={classes}>{amount}</td>;
   }
 });
 
