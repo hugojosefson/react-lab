@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/jayway/react-lab",
   "devDependencies": {
+    "http-server": "^0.7.3",
     "react-tools": "^0.12.0"
-  }
+  },
+  "dependencies": {}
 }
