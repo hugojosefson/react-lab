@@ -125,6 +125,8 @@ var ColoredAmountCell = React.createClass({
   }
 });
 
+var Add
+
 /* Render
  * ======================================================================== */
 
