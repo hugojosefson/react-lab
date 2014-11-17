@@ -57,7 +57,6 @@ var TransactionLog = React.createClass({
 
     function createTransactionRow(transaction, i) {
       return (
-        //<tr key={i}><td>Hej</td></tr>
         <TransactionRow key={i} transaction={ transaction }></TransactionRow>
       );
     }
@@ -73,10 +72,7 @@ var TransactionLog = React.createClass({
             <th>Date</th>
           </tr>
         </thead>
-        //<tbody>{rows}</tbody>
-        <tbody>
-          <tr><td>hej</td></tr>
-        </tbody>
+        <tbody>{rows}</tbody>
         <tfoot>
           <SummaryRow transactions={ self.state.transactions } />
         </tfoot>
@@ -87,14 +83,14 @@ var TransactionLog = React.createClass({
 
 var TransactionRow = React.createClass({
   render: function () {
-    //var transaction = this.props.transaction;
-    //var date = transaction.date.toString();
-    //console.log(date);
+    var transaction = this.props.transaction;
+    var date = transaction.date.toString();
+
     return (
       <tr>
-     //   <td>{ transaction.description }</td>
-   //     <ColoredAmountCell amount={ transaction.amount } />
-       // <td>{ date }</td>
+        <td>{ transaction.description }</td>
+        <ColoredAmountCell amount={ transaction.amount } />
+        <td>{ date }</td>
       </tr>
     );
   }

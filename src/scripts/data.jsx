@@ -12,10 +12,7 @@ var api = {
         id: 1,
         description: 'General Awesomeness Award',
         amount: 10000,
-        date: (function () {
-          var d = new Date();
-          d.setMonth(2);
-        })()
+        date: new Date()
       }]);
     }
   }
