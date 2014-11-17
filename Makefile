@@ -10,9 +10,9 @@ node_modules:
 build: node_modules
 	node_modules/.bin/jsx $(SRC_DIR) $(DIST_DIR) --extension jsx
 
-watch:
+watch: node_modules
 	node_modules/.bin/jsx $(SRC_DIR) $(DIST_DIR) --watch --extension jsx &
-	http-server
+	node_modules/.bin/http-server
 
 clean:
 	rm -rf dist
