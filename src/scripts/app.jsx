@@ -19,16 +19,6 @@ var Header = React.createClass({
 /* Main */
 
 var Main = React.createClass({
-  render: function () {
-    return (
-      <main className="main" role="main">
-        <TransactionLog />
-      </main>
-    );
-  }
-});
-
-var TransactionLog = React.createClass({
   getInitialState: function () {
     return {
       transactions: null
@@ -39,19 +29,39 @@ var TransactionLog = React.createClass({
   },
   load: function () {
     var self = this;
-    api.expenses.getAll().then(function (transactions) {
+    api.transactions.getAll().then(function (transactions) {
       self.setState({
         transactions: transactions
       });
     });
   },
+  onTransactionAdded: function () {
+    this.load();
+  },
   render: function () {
-    var self = this;
-
-    if (!self.state.transactions) {
+    if (!this.state.transactions) {
       return <p>Loading...</p>;
     }
-    if (self.state.transactions.length === 0) {
+
+    return (
+      <main className="main" role="main">
+        <TransactionLog
+          transactions={this.state.transactions}>
+        </TransactionLog>
+        <AddTransactionForm
+          onTransactionAdded={this.onTransactionAdded}>
+        </AddTransactionForm>
+      </main>
+    );
+  }
+});
+
+var TransactionLog = React.createClass({
+  render: function () {
+    var self = this;
+    var transactions = self.props.transactions || [];
+
+    if (transactions.length === 0) {
       return <p>You have no transactions.</p>;
     }
 
@@ -61,7 +71,7 @@ var TransactionLog = React.createClass({
       );
     }
 
-    var rows = self.state.transactions.map(createTransactionRow);
+    var rows = transactions.map(createTransactionRow);
 
     return (
       <table className="transaction-log">
@@ -74,7 +84,7 @@ var TransactionLog = React.createClass({
         </thead>
         <tbody>{rows}</tbody>
         <tfoot>
-          <SummaryRow transactions={ self.state.transactions } />
+          <SummaryRow transactions={ transactions } />
         </tfoot>
       </table>
     );
@@ -98,10 +108,10 @@ var TransactionRow = React.createClass({
 
 var SummaryRow = React.createClass({
   render: function () {
-    function sum (t1, t2) {
-      return t1.amount + t2.amount;
+    function sum (acc, t) {
+      return acc + t.amount;
     }
-    var total = this.props.transactions.reduce(sum);
+    var total = this.props.transactions.reduce(sum, 0);
     return (
       <tr>
         <td>Total</td>
@@ -125,7 +135,41 @@ var ColoredAmountCell = React.createClass({
   }
 });
 
-var Add
+var AddTransactionForm = React.createClass({
+  onSubmit: function (e) {
+    e.preventDefault();
+    var self = this;
+
+    var description = this.refs.description.getDOMNode().value.trim();
+    var amount = parseFloat(this.refs.amount.getDOMNode().value);
+
+    if (!description || amount === 0) {
+      return;
+    }
+
+    api.transactions.add({
+      description: description,
+      amount: amount,
+      date: new Date()
+    }).then(function (transaction) {
+      self.props.onTransactionAdded(transaction);
+      self.clear();
+    });
+  },
+  clear: function () {
+    this.refs.description.getDOMNode().value = '';
+    this.refs.amount.getDOMNode().value = '';
+  },
+  render: function () {
+    return (
+      <form className="add-transaction" onSubmit={this.onSubmit}>
+        <input ref="description" type="text" placeholder="Description" />
+        <input ref="amount" type="number" placeholder="Amount" />
+        <button type="submit">Add</button>
+      </form>
+    );
+  }
+});
 
 /* Render
  * ======================================================================== */

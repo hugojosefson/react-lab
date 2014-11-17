@@ -124,14 +124,14 @@ a {
 /* Entry Form
  ------------------------------------------------------- */
 
-.new-entry {
+.add-transaction {
   margin: 0 auto;
   padding: 0 .5rem;
   max-width: 400px;
   width: 100%;
 }
-.new-entry input,
-.new-entry button {
+.add-transaction input,
+.add-transaction button {
   width: 100%;
   height: 2rem;
   padding: 0 .5rem;
@@ -143,8 +143,7 @@ a {
   -moz-appearance: none;
   -webkit-appearance: none;
 }
-.new-entry button {
+.add-transaction button {
   color: white;
   background: tomato;
 }
-
