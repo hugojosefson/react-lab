@@ -12,14 +12,18 @@ A lab on the basics of [React](http://facebook.github.io/react/).
 
 Clone and enter the repository:
 
-    git clone git@github.com:jayway/react-lab.git
-    cd react-lab
+```bash
+git clone git@github.com:jayway/react-lab.git
+cd react-lab
+```
 
 Build and watch for changes:
 
-    make watch # builds and starts a server
-    google-chrome http://localhost:8081 # opens the app
-    google-chrome http://localhost:8081/blueprint.html # opens the blueprint
+```bash
+make watch # builds and starts a server
+google-chrome http://localhost:8081 # opens the app
+google-chrome http://localhost:8081/blueprint.html # opens the blueprint
+```
 
 ## Objective
 
