@@ -8,27 +8,13 @@ Clone the repository:
 
     git clone git@github.com:jayway/react-lab.git
 
-If you don't have Node (requires [Homebrew](http://brew.sh)):
-
-    brew install node
-
-Install the JSX transformer:
-
-    npm install -g react-tools
-
-Install a simple web server:
-
-    npm install -g http-server
-
-Finally:
-
-    http-server
-    jsx src dist --watch --extension jsx
-    open http://localhost:8080
+Build and watch for changes:
+    
+    make watch
 
 ## Objective
 
-Create a (very) lightweight [SCRUM](http://en.wikipedia.org/wiki/Scrum_(software_development)) board.
+Create a (very) lightweight account checkbook app.
 
 See the [blueprint](https://github.com/jayway/react-lab/blob/master/blueprint.html) for target markup. CSS is provided, but feel free to modify as needed.
 
