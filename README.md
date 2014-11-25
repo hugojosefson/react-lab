@@ -17,12 +17,9 @@ Clone and enter the repository:
 
 Build and watch for changes:
 
-    make watch
-
-This starts a server that hosts your app and the blueprint.
-
-* Open http://localhost:8081/ to see your app.
-* Open http://localhost:8081/blueprint.html to see the blueprint.
+    make watch # builds and starts a server
+    google-chrome http://localhost:8081 # opens the app
+    google-chrome http://localhost:8081/blueprint.html # opens the blueprint
 
 ## Objective
 
