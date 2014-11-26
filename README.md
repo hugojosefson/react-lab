@@ -40,8 +40,19 @@ When you have created the form you can add new transactions with
 `api.transactions.add(transaction)`. See the `src/scripts/data.jsx` for the format
 of the transactions.
 
-When you're done you should be able to add new transactions to the list and see
-the updated **Sum**.
+### Tasks
+
+* Display all existing transactions in the table.
+* Display a summary row in the bottom of the table.
+* Make it possible to add new transactions (the summary row should update).
+
+### Extras
+
+*Something for the over-achievers...*
+
+* Sort the transactions by `transaction.date` (ascending).
+* Validate input and reflect errors in UI somehow.
+* Make it possible to delete transactions.
 
 ## Useful Links
 

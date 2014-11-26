@@ -16,12 +16,12 @@ var api = (function () {
   add({
     description: 'Burgers',
     amount: 54.99,
-    date: new Date()
+    date: new Date(2014, 04, 05)
   });
   add({
     description: 'General Awesomeness Award',
     amount: 10000,
-    date: new Date()
+    date: new Date(2013, 01, 21)
   });
 
   return {
