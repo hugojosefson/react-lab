@@ -21,8 +21,8 @@ Build and watch for changes:
 
 ```bash
 make watch # builds and starts a server
-google-chrome http://localhost:8081 # opens the app
-google-chrome http://localhost:8081/blueprint.html # opens the blueprint
+google-chrome http://localhost:8080 # opens the app
+google-chrome http://localhost:8080/blueprint.html # opens the blueprint
 ```
 
 ## Objective
