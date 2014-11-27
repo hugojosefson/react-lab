@@ -56,6 +56,8 @@ var Main = React.createClass({
   }
 });
 
+/* Transaction Log */
+
 var TransactionLog = React.createClass({
   render: function () {
     var self = this;
@@ -91,6 +93,8 @@ var TransactionLog = React.createClass({
   }
 });
 
+/* Transaction Row */
+
 var TransactionRow = React.createClass({
   render: function () {
     var transaction = this.props.transaction;
@@ -105,6 +109,8 @@ var TransactionRow = React.createClass({
     );
   }
 });
+
+/* Summary Row */
 
 var SummaryRow = React.createClass({
   render: function () {
@@ -122,6 +128,8 @@ var SummaryRow = React.createClass({
   }
 });
 
+/* Colored Amount Cell */
+
 var ColoredAmountCell = React.createClass({
   render: function () {
     var amount = this.props.amount;
@@ -134,6 +142,8 @@ var ColoredAmountCell = React.createClass({
     return <td className={classes}>{amount}</td>;
   }
 });
+
+/* Add Transaction Form */
 
 var AddTransactionForm = React.createClass({
   onSubmit: function (e) {
