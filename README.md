@@ -4,8 +4,7 @@ A lab on the basics of [React](http://facebook.github.io/react/).
 
 ## Requirements
 
-* NodeJS 0.11.x
-* Make
+* NodeJS 0.10.x
 * [A browser that supports Promises](http://caniuse.com/#feat=promises).
 
 ## Getting Started
@@ -17,12 +16,20 @@ git clone git@github.com:jayway/react-lab.git
 cd react-lab
 ```
 
+Start the following script and open `http://localhost:8080` in your browser.
+
+### *nix/OSX
+
 Build and watch for changes:
 
 ```bash
 make watch # builds and starts a server
-google-chrome http://localhost:8080 # opens the app
-google-chrome http://localhost:8080/blueprint.html # opens the blueprint
+```
+
+### Windows
+
+```batch
+watch
 ```
 
 ## Objective
