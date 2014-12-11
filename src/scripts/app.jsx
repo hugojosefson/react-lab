@@ -52,9 +52,22 @@ var SummaryRow = React.createClass({
     }
 });
 
-api.transactions.getAll().then(function (all) {
-    React.render(
-        <div className="page-wrap">
+var ExpenseManager = React.createClass({
+    propTypes: {
+        api: React.PropTypes.object.isRequired
+    },
+    getInitialState: function () {
+        return {
+            transactions: []
+        };
+    },
+    componentDidMount: function () {
+        this.props.api.transactions.getAll().then(function (transactions) {
+            this.setState({transactions: transactions});
+        }.bind(this));
+    },
+    render: function () {
+        return <div className="page-wrap">
             <header className="header" role="banner">
                 <h1>
                     <a href="blueprint.html">Expense Manager</a>
@@ -69,18 +82,22 @@ api.transactions.getAll().then(function (all) {
                             <th className="date">Date</th>
                         </tr>
                     </thead>
-                    <TransactionsBody transactions={all}/>
+                    <TransactionsBody transactions={this.state.transactions}/>
                     <tfoot>
-                        <SummaryRow transactions={all}/>
+                        <SummaryRow transactions={this.state.transactions}/>
                     </tfoot>
                 </table>
             </main>
-        </div>
-        ,
-        document.querySelector('body')
-    );
-
+        </div>;
+    }
 });
+
+React.render(
+    <ExpenseManager api={api}/>
+    ,
+    document.querySelector('body')
+);
+
 
 function pluck(prop) {
     return function (o) {
