@@ -52,6 +52,30 @@ var SummaryRow = React.createClass({
     }
 });
 
+var AddTransactionForm = React.createClass({
+    propTypes: {
+        onSubmit: React.PropTypes.func.isRequired
+    },
+    onSubmit: function (e) {
+        e.preventDefault();
+
+        var transaction = {
+            description: this.getDOMNode().querySelector('input[data-name=description]').value,
+            amount: parseFloat(this.getDOMNode().querySelector('input[data-name=amount]').value),
+            date: new Date()
+        };
+        this.props.onSubmit(transaction);
+        this.getDOMNode().reset();
+    },
+    render: function () {
+        return <form className="add-transaction">
+            <input type="text" data-name="description" placeholder="Description"/>
+            <input type="number" data-name="amount" placeholder="Amount"/>
+            <button type="submit" onClick={this.onSubmit}>Submit</button>
+        </form>;
+    }
+});
+
 var ExpenseManager = React.createClass({
     propTypes: {
         api: React.PropTypes.object.isRequired
@@ -65,6 +89,9 @@ var ExpenseManager = React.createClass({
         this.props.api.transactions.getAll().then(function (transactions) {
             this.setState({transactions: transactions});
         }.bind(this));
+    },
+    addTransaction: function (transaction) {
+        this.props.api.transactions.add(transaction).then(this.componentDidMount.bind(this));
     },
     render: function () {
         return <div className="page-wrap">
@@ -87,6 +114,7 @@ var ExpenseManager = React.createClass({
                         <SummaryRow transactions={this.state.transactions}/>
                     </tfoot>
                 </table>
+                <AddTransactionForm onSubmit={this.addTransaction}/>
             </main>
         </div>;
     }
