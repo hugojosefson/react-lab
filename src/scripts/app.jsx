@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var Row = React.createClass({
+var TransactionRow = React.createClass({
     propTypes: {
         description: React.PropTypes.string.isRequired,
         amount: React.PropTypes.number.isRequired,
@@ -9,8 +9,8 @@ var Row = React.createClass({
     render: function () {
         return <tr>
             <td>{this.props.description}</td>
-            <td>{this.props.amount}</td>
-            <td>{this.props.date}</td>
+            <td className="amount {this.props.amount < 0 ? 'negative' : 'positive'}">{this.props.amount}</td>
+            <td className="date">{moment(this.props.date).format('YYYY-MM-DD')}</td>
         </tr>;
     }
 });
@@ -18,11 +18,29 @@ var Row = React.createClass({
 
 api.transactions.getAll().then(function (all) {
     React.render(
-        <table>
-        {all.map(function (row) {
-            return <Row {...row} key={row.id}/>;
-        })}
-        </table>
+        <div className="page-wrap">
+            <header className="header" role="banner">
+                <h1>
+                    <a href="blueprint.html">Expense Manager</a>
+                </h1>
+            </header>
+            <main className="main" role="main">
+                <table className="transaction-log">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th className="amount">Amount</th>
+                            <th className="date">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {all.map(function (transaction) {
+                            return <TransactionRow {...transaction} key={transaction.id}/>;
+                        })}
+                    </tbody>
+                </table>
+            </main>
+        </div>
         ,
         document.querySelector('body')
     );
