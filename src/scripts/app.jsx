@@ -15,6 +15,18 @@ var TransactionRow = React.createClass({
     }
 });
 
+var SummaryRow = React.createClass({
+    propTypes: {
+        amount: React.PropTypes.number.isRequired
+    },
+    render: function () {
+        return <tr className="summary">
+            <td>Sum</td>
+            <td className="amount {this.props.amount < 0 ? 'negative' : 'positive'}">{this.props.amount}</td>
+            <td></td>
+        </tr>;
+    }
+});
 
 api.transactions.getAll().then(function (all) {
     React.render(
@@ -38,6 +50,9 @@ api.transactions.getAll().then(function (all) {
                             return <TransactionRow {...transaction} key={transaction.id}/>;
                         })}
                     </tbody>
+                    <tfoot>
+                        <SummaryRow amount={all.map(pluck('amount')).reduce(add, 0)}/>
+                    </tfoot>
                 </table>
             </main>
         </div>
@@ -46,3 +61,14 @@ api.transactions.getAll().then(function (all) {
     );
 
 });
+
+function pluck(prop) {
+    return function (o) {
+        return o[prop];
+    };
+}
+
+function add(a, b) {
+    return a + b;
+}
+
