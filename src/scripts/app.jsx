@@ -30,8 +30,11 @@ var TransactionsBody = React.createClass({
         transactions: React.PropTypes.array.isRequired
     },
     render: function () {
+        var transactions = this.props.transactions.sort(function (t1, t2) {
+            return t1.date.getTime() - t2.date.getTime();
+        });
         return <tbody>
-            {this.props.transactions.map(function (transaction) {
+            {transactions.map(function (transaction) {
                 return <TransactionRow {...transaction} key={transaction.id}/>;
             })}
         </tbody>;
