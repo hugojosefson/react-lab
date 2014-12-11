@@ -15,6 +15,19 @@ var TransactionRow = React.createClass({
     }
 });
 
+var TransactionsBody = React.createClass({
+    propTypes: {
+        transactions: React.PropTypes.array.isRequired
+    },
+    render: function () {
+        return <tbody>
+            {this.props.transactions.map(function (transaction) {
+                return <TransactionRow {...transaction} key={transaction.id}/>;
+            })}
+        </tbody>;
+    }
+});
+
 var SummaryRow = React.createClass({
     propTypes: {
         amount: React.PropTypes.number.isRequired
@@ -45,11 +58,7 @@ api.transactions.getAll().then(function (all) {
                             <th className="date">Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {all.map(function (transaction) {
-                            return <TransactionRow {...transaction} key={transaction.id}/>;
-                        })}
-                    </tbody>
+                    <TransactionsBody transactions={all}/>
                     <tfoot>
                         <SummaryRow amount={all.map(pluck('amount')).reduce(add, 0)}/>
                     </tfoot>
