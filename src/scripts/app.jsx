@@ -1,5 +1,15 @@
 /** @jsx React.DOM */
 
+var AmountCell = React.createClass({
+    propTypes: {
+        amount: React.PropTypes.number.isRequired
+    },
+    render: function () {
+        var signClass = this.props.amount < 0 ? 'negative' : 'positive';
+        return <td className="amount {signClass}">{this.props.amount}</td>;
+    }
+});
+
 var TransactionRow = React.createClass({
     propTypes: {
         description: React.PropTypes.string.isRequired,
@@ -9,7 +19,7 @@ var TransactionRow = React.createClass({
     render: function () {
         return <tr>
             <td>{this.props.description}</td>
-            <td className="amount {this.props.amount < 0 ? 'negative' : 'positive'}">{this.props.amount}</td>
+            <AmountCell amount={this.props.amount}/>
             <td className="date">{moment(this.props.date).format('YYYY-MM-DD')}</td>
         </tr>;
     }
@@ -30,12 +40,13 @@ var TransactionsBody = React.createClass({
 
 var SummaryRow = React.createClass({
     propTypes: {
-        amount: React.PropTypes.number.isRequired
+        transactions: React.PropTypes.array.isRequired
     },
     render: function () {
+        var amount = this.props.transactions.map(pluck('amount')).reduce(add, 0);
         return <tr className="summary">
             <td>Sum</td>
-            <td className="amount {this.props.amount < 0 ? 'negative' : 'positive'}">{this.props.amount}</td>
+            <AmountCell amount={amount}/>
             <td></td>
         </tr>;
     }
@@ -60,7 +71,7 @@ api.transactions.getAll().then(function (all) {
                     </thead>
                     <TransactionsBody transactions={all}/>
                     <tfoot>
-                        <SummaryRow amount={all.map(pluck('amount')).reduce(add, 0)}/>
+                        <SummaryRow transactions={all}/>
                     </tfoot>
                 </table>
             </main>
